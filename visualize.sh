@@ -61,13 +61,47 @@ while [ $menuChoice -ne 0 ]; do
 
     # Create forceGraph.html
     if [ $menuChoice -eq 1 ]; then
-        # Check to see if we already make a force graph. If so, don't waste
+        # Check to see if we already made a force graph. If so, don't waste
         # resources doing it again
         if [ ! -f "$fileDir/forceGraph.html" ]; then
-            python networkNodes.py $fileDir #> /dev/null 2>&1
+            python networkNodes.py $fileDir > /dev/null 2>&1
         else
             printf "Force graph already generated. Open forceGraph.html in "
-            echo "$fileDir to view it"
+            read -p "$fileDir to view it"
         fi
     fi
+
+    # Generate statistics about a specific IP address
+    if [ $menuChoice -eq 2 ]; then
+        # Get an IP address from the user
+        read -p "What IP address would you like information on? " ipAddress
+
+        # Check to see if we already did a statistical analysis on the given
+        # IP address. If so, don't waste resources doing it again
+        if [ ! -f "$fileDir/$ipAddress.html" ]; then
+
+            # Check to make sure the IP address is valid
+            IFS='.' read -ra ADDR <<< "$ipAddress"
+            if [ ! ${#ADDR[@]} -eq 4 ];then  # Does it have 4 octets?
+                read -p "Invalid IP address"
+                continue
+            fi
+            INVALID=0
+            for i in "${ADDR[@]}"; do
+                if [[ $i -lt 0 ]] || [[ $i -gt 255 ]]; then  # Is each octet 0 <= octet <= 255?
+                    read -p "Invalid IP address"
+                    INVALID=1
+                fi
+            done
+            
+            if [ $INVALID -eq 0 ]; then
+                python ipInfo.py $fileDir $ipAddress > /dev/null 2>&1
+            fi
+
+        else
+            printf "Statistical analysis already generated. Open $ipAddress.html in "
+            read -p "$fileDir to view it"
+        fi
+    fi
+
 done
