@@ -33,6 +33,8 @@ Usage is simple: `./visualize <pacp file>`
 ## What do the different options mean?
 `1. Force graph of IP interactions` : This option creates nodes on a graph where each node is
 a computer on the network and each edge connecting them indicates a transaction between computers.
+The resulting graph is interactive. Hovering over a node gives you its IP address, the left mouse
+button allows you to spin the graph, and the right mouse button allows you to move the graph.
 ![alt tag](https://raw.githubusercontent.com/TRDan6577/networkStatistics/master/exampleOutput/forcegraph1.JPG)
 ![alt tag](https://raw.githubusercontent.com/TRDan6577/networkStatistics/master/exampleOutput/forcegraph2.JPG)
 
@@ -40,7 +42,7 @@ a computer on the network and each edge connecting them indicates a transaction 
 statistical properties of a particular host on the network. Information provided includes:
 amount of traffic sent and received, and types and amounts of traffic processed by the host 
 (expressed in both bytes and number of packets). Currently, the types of traffic supported are
-ICMP, ICMPv6, TCP, and UDP.
+ICMP, ICMPv6, ARP, TCP, and UDP.
 ![alt tag](https://raw.githubusercontent.com/TRDan6577/networkStatistics/master/exampleOutput/ipinfo.JPG)
 
 ## Drawbacks
