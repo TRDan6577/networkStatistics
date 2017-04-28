@@ -29,3 +29,29 @@ git clone https://github.com/TRDan6577/networkStatistics.git`
 
 ## How do I amaze others with this program?
 Usage is simple: `./visualize <pacp file>`
+
+## What do the different options mean?
+`1. Force graph of IP interactions` : This option creates nodes on a graph where each node is
+a computer on the network and each edge connecting them indicates a transaction between computers.
+![alt tag](https://raw.githubusercontent.com/TRDan6577/networkStatistics/master/exampleOutput/forcegraph1.JPG)
+![alt tag](https://raw.githubusercontent.com/TRDan6577/networkStatistics/master/exampleOutput/forcegraph2.JPG)
+
+`2. IP specific information (types of traffic, how much traffic, etc)` : This option shows the
+statistical properties of a particular host on the network. Information provided includes:
+amount of traffic sent and received, and types and amounts of traffic processed by the host 
+(expressed in both bytes and number of packets). Currently, the types of traffic supported are
+ICMP, ICMPv6, TCP, and UDP.
+![alt tag](https://raw.githubusercontent.com/TRDan6577/networkStatistics/master/exampleOutput/ipinfo.JPG)
+
+## Drawbacks
+At this time, we have not found a good program that converts XML to JSON. Our current solution
+does not play well with large XML files. This means that the pcap file that generates the XML
+can not be large. The maximum pcap file size is dependant on the hardware you have available,
+but as an example, a 700MB pcap file resulted in an XML file larger than 100GB. Any future
+work done here should change start by changing the way we read the file (read the raw pcap
+rather than converting it to a different file type)
+
+## Contributors
+Tom Daniels,
+Kaitlin Keenan, and
+Corinne Smith
