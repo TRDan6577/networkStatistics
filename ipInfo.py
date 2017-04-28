@@ -90,6 +90,24 @@ for packet in packets:
                 icmpv6Packets += 1
                 icmpv6Bytes += packet['proto'][GEN_INFO]['@size']
 
+    # If the frame is an ARP request/reply, determine if it is to or from the
+    # IP address we're analyzing
+    if(len(packet['proto']) > DATA and packet['proto'][NET]['@name'] == 'arp'):
+        # The ARP frame was sent to the IP address we're analyzing
+        if(packet['proto'][NET]['field'][6]['@show'] == ip):
+            arpFrames += 1
+            arpBytes += packet['proto'][GEN_INFO]['@size']
+            packetsSent += 1
+            bytesSent += packet['proto'][GEN_INFO]['@size']
+
+        # The ARP frame was sent to the IP address we're analyzing
+        if(packet['proto'][NET]['field'][8]['@show'] == ip):
+            arpFrames += 1
+            arpBytes += packet['proto'][GEN_INFO]['@size']
+            packetsReceived += 1
+            bytesReceived += packet['proto'][GEN_INFO]['@size']
+
+
 # Create the pie charts using the data we've gathered
 fig = {
     # Data Section
@@ -111,16 +129,16 @@ fig = {
     "hole": .4,
     "type": "pie"},
     { # Data for protocol specific bytes
-    "values": [icmpBytes, icmpv6Bytes, tcpBytes, udpBytes],
-    "labels": ["ICMP", "ICMPv6", "TCP", "UDP"],
+    "values": [icmpBytes, icmpv6Bytes, tcpBytes, udpBytes, arpBytes],
+    "labels": ["ICMP", "ICMPv6", "TCP", "UDP", "ARP"],
     "domain": {"x": [.51, 1], "y": [0, .49]},
     "name": "Bytes",
     "hoverinfo": "label+name+value",
     "hole": .4,
     "type": "pie"},
     { # Data for protocol specific packets
-    "values": [icmpPackets, icmpv6Packets, tcpPackets, udpPackets],
-    "labels": ["ICMP", "ICMPv6", "TCP", "UDP"],
+    "values": [icmpPackets, icmpv6Packets, tcpPackets, udpPackets, arpFrames],
+    "labels": ["ICMP", "ICMPv6", "TCP", "UDP", "ARP"],
     "domain": {"x": [.51, 1], "y": [.51, 1]},
     "name": "Packets",
     "hoverinfo": "label+name+value",
