@@ -5,7 +5,7 @@
 
 # Check to make sure there was exactly one argument
 if ! [ -n "$1" ]; then
-    echo 'Usage: ./visualize.sh pcapfile'
+    echo 'Usage: ./visualize.sh pcapfile [-retainJSON]'
     exit
 fi
 
@@ -13,18 +13,11 @@ fi
 printf 'Converting your pcap file to a XML file...'
 tshark -r "$1" -T pdml > xmlOut.xml
 echo 'done'
-echo
 
-# Determine if the JSON file should be beautified
-result='a'
-while [ "$(echo $result | tr [:upper:] [:lower:])" != "n" -a "$(echo $result | tr [:upper:] [:lower:])" != 'y' ]; do
-    printf "Would you like the resulting JSON file to be human-readable?"
-    read -p " Please note this will take a lot of time and resouces [y/n]: " result
-done
-
-# Convert the XML to JSON
+# Determine if the JSON file should be beautified and
+# convert the XML to JSON
 printf 'Converting xmlOut.xml to jsonOut.json...'
-if [ "$(echo $result | tr [:upper:] [:lower:])" == 'y' ]; then
+if [ "$2" == '-retainJSON' ]; then
     python xmlToJson.py beautify
 else
     python xmlToJson.py
@@ -119,3 +112,10 @@ while [ $menuChoice -ne 0 ]; do
 
 
 done
+
+# Remove the xml and json files we generated
+if [ "$2" == "-retainJSON" ]; then
+    rm xmlOut.xml
+else
+    rm xmlOut.xml jsonOut.json
+fi

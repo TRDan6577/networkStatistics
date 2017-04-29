@@ -28,7 +28,12 @@ Other than the prerequisites, download SNAP by using
 git clone https://github.com/TRDan6577/networkStatistics.git`
 
 ## How do I amaze others with this program?
-Usage is simple: `./visualize <pacp file>`
+Usage is simple: `./visualize <pacp file> [-retainJSON]`. The optional argument specifies whether or not
+you want a human readable JSON file to be generated (if, for some reason, you want to view the
+JSON file). By default, SNAP will delete the XML and JSON files it deletes but specifying 'y' as
+the option argument forces SNAP to retain the JSON file. This JSON file is overwritten the next
+time you specify 'y' as your optional argument. PLEASE NOTE MAKING THE FILE HUMAN READABLE CONSUMES
+A HIGH AMOUNT OF SYSTEM RESOURCES AND A LOT OF TIME.
 
 ## What do the different options mean?
 `1. Force graph of IP interactions` : This option creates nodes on a graph where each node is
