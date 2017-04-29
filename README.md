@@ -33,8 +33,14 @@ Usage is simple: `./visualize <pacp file>`
 ## What do the different options mean?
 `1. Force graph of IP interactions` : This option creates nodes on a graph where each node is
 a computer on the network and each edge connecting them indicates a transaction between computers.
-The resulting graph is interactive. Hovering over a node gives you its IP address, the left mouse
-button allows you to spin the graph, and the right mouse button allows you to move the graph.
+Each node on the graph is colored according to the amount of packets it sent out. If node sent out
+100% of the packets in the pcap, it will be solid red. On the other hand, if a node sends out only
+one or two packets (resulting in nearly 0% of packets sent out), it will be colored solid blue. A
+node that sends out about 50% of the traffic in the pcap will be colored purple. These colors are
+a spectrum; this means if a node looks blueish purple, it sent out more traffic than a node colored
+blue but less traffic than a node colored purple. The resulting graph is interactive. Hovering
+over a node gives you its IP address, the left mouse button allows you to spin the graph, and the
+right mouse button allows you to move the graph. Scrolling the wheel lets you zoom in and out.
 ![alt tag](https://raw.githubusercontent.com/TRDan6577/networkStatistics/master/exampleOutput/forcegraph1.JPG)
 ![alt tag](https://raw.githubusercontent.com/TRDan6577/networkStatistics/master/exampleOutput/forcegraph2.JPG)
 
