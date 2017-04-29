@@ -1,6 +1,7 @@
 #!/bin/bash
 # Author: Tom Daniels <trd6577@g.rit.edu>
 # Purpose: This file is the main running file for the visualization software
+# TODO: Check to make sure the input file both exists and is a pcap
 
 # Check to make sure there was exactly one argument
 if ! [ -n "$1" ]; then
@@ -45,7 +46,7 @@ while [ $menuChoice -ne 0 ]; do
     
 1. Force graph of IP interactions
 2. IP specific information (types of traffic, how much traffic, etc)
-3. General Information (For all IP address: types of traffic, how much traffic, etc)
+3. General Information (For all IP addresses: types of traffic, how much traffic, etc)
 0. Exit
 
 '
@@ -103,5 +104,18 @@ while [ $menuChoice -ne 0 ]; do
             read -p "$fileDir to view it"
         fi
     fi
+
+    # Generate statistics on all IP addresses
+    if [ $menuChoice -eq 3 ]; then
+        # Check to see if we already made this graph. If so, don't waste
+        # resources doing it again
+        if [ ! -f "$fileDir/allIpInfo.html" ]; then
+            python allIpInfo.py $fileDir > /dev/null 2>&1
+        else
+            printf "Graph already generated. Open allIPInfo.html in "
+            read -p "$fileDir to view it"
+        fi
+    fi
+
 
 done

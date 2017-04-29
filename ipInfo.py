@@ -1,7 +1,6 @@
 """
 Purpose: Makes the charts for IP specific information
 Author: Tom Daniels <trd6577@g.rit.edu>
-TODO: Add ARP analysis
 """
 
 import json

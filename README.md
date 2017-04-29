@@ -45,6 +45,13 @@ amount of traffic sent and received, and types and amounts of traffic processed 
 ICMP, ICMPv6, ARP, TCP, and UDP.
 ![alt tag](https://raw.githubusercontent.com/TRDan6577/networkStatistics/master/exampleOutput/ipinfo.JPG)
 
+`3. General Information (For all IP addresses: types of traffic, how much traffic, etc)` : 
+This option shows the same as the previous option, but rather than showing the statistics
+about a single IP address that you give it, it shows statistics about all IP addresses in
+the pcap. For this reason, this will not generate the 'Bytes sent/received' or 'packets 
+sent/received' pie charts.
+![alt tag](https://raw.githubusercontent.com/TRDan6577/networkStatistics/master/exampleOutput/allipinfo.JPG)
+
 ## Drawbacks
 At this time, we have not found a good program that converts XML to JSON. Our current solution
 does not play well with large XML files. This means that the pcap file that generates the XML
