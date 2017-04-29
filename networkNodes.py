@@ -1,6 +1,6 @@
 """
-TODO: Make nodes colorful based on the amount of traffic they send/receive (ie
-a node that gets a lot of traffic is red and ones that barely have any are blue)
+Author: Tom Daniels
+Purpose: Creates a force graph of IP addresses and any connections they made
 """
 
 import igraph
@@ -24,10 +24,11 @@ f = open('jsonOut.json', 'rb')
 jsonData = json.loads(f.read())
 packets = jsonData['pdml']['packet']
 
-nodeID = {}  # Maps: Node -> ID
-nodes = []   # List of nodes
-mapping = {} # Maps: Node interation with Node -> # times
-nodeNumber = 0
+nodeID = {}      # Maps: Node -> ID
+nodes = []       # List of nodes
+mapping = {}     # Maps: Node interation with Node -> # times
+nodeNumber = 0   # Give the Nodes an ID
+nodeCounter = {} # Maps: Node -> # of times we've seen it
 
 for packet in packets:
     if(len(packet['proto']) > NET and packet['proto'][NET]['@name'] == 'ip'):
@@ -50,22 +51,33 @@ for packet in packets:
             nodeID[dst] = nodeNumber
             nodeNumber = nodeNumber + 1
 
+        # Increment the counter for the number of times we've seen this node
+        if(nodeCounter.has_key(src)):
+            nodeCounter[src] += 1
+        else:
+            nodeCounter[src] = 1
+        if(nodeCounter.has_key(dst)):
+            nodeCounter[dst] += 1
+        else:
+            nodeCounter[dst] = 1
+
+
         # Replace string IP addresses with numbers
         src = str(nodeID[src])
         dst = str(nodeID[dst])
 
         # Add the mapping to the dictionary
-        if(mapping.has_key(src + ':' + dst)):
-            mapping[src + ':' + dst] = mapping[src + ':' + dst] + 1
-        elif(mapping.has_key(dst + ':' + src)):
-            mapping[dst + ':' + src] = mapping[dst + ':' + src] + 1
-        else:
+        if(not(mapping.has_key(src + ':' + dst) and mapping.has_key(dst + ':' + src))):
             mapping[src + ':' + dst] = 1
 
+totalPackets = len(packets)
+colors = []
+# Set the colors for each node based on how many packets they sent out
+for node in nodes:
+    colors.append(nodeCounter[node] / float(totalPackets))
+
 edges = [(int(key.split(':')[0]), int(key.split(':')[1])) for key in mapping.keys()]
-
 graph = igraph.Graph(edges, directed=False)
-
 layout = graph.layout('kk', dim=3)
 
 length = len(nodes)
@@ -81,14 +93,18 @@ for e in edges:
     Ye+=[layout[e[0]][1], layout[e[1]][1], None]
     Ze+=[layout[e[0]][2], layout[e[1]][2], None]
 
+# Makes the edges
 trace1 = pg.Scatter3d(x=Xe, y=Ye, z=Ze, mode='lines',
                       line=pg.Line(color='rgb(125,125,125)', width=1),
                       hoverinfo='none')
 
+# Makes the nodes
 trace2 = pg.Scatter3d(x=Xn, y=Yn, z=Zn, mode='markers',
                       name='IP Addresses',
                       marker=pg.Marker(symbol='dot',size=6,
-                                       line=pg.Line(color='rgb(50,50,50)', width=0.5)),
+                                       line=pg.Line(color='rgb(50,50,50)',
+                                       width=0.5), colorscale=[[0, 'rgb(0,0,255)'], [1, 'rgb(255,0,0)']],
+                                       color=colors),
                       text=nodes, hoverinfo='text')
 
 axis = dict(showbackground=False, showline=False, zeroline=False, showgrid=False,
