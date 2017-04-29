@@ -90,6 +90,10 @@ while [ $menuChoice -ne 0 ]; do
             
             if [ $INVALID -eq 0 ]; then
                 python ipInfo.py $fileDir $ipAddress > /dev/null 2>&1
+                # Wait here for 10 seconds. If you don't give time for the
+                # browser to open, it gives you an error
+                sleep 10s
+                python ipTimeline.py $fileDir $ipAddress > /dev/null 2>&1
             fi
 
         else
