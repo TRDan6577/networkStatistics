@@ -137,7 +137,7 @@ for byteType in BYTES:
     traces.append(plotly.graph_objs.Scatter(x=x_axis, y=y_axis, name=byteType))
 
 
-layout = {'title': 'Title', 'xaxis': {'title':'Time'}, 'yaxis': {'title': 'Number of Bytes'}}
+layout = {'title': sys.argv[2] + ' Byte Timeline', 'xaxis': {'title':'Time'}, 'yaxis': {'title': 'Number of Bytes'}}
 plotly.offline.plot({'data':traces, 'layout':layout}, filename=sys.argv[1] + 
                     '/' + sys.argv[2] + '_timelineBytes.html')
 
@@ -149,6 +149,6 @@ for packetType in PACKETS:
         y_axis.append(timeLine[section][packetType])
     traces.append(plotly.graph_objs.Scatter(x=x_axis, y=y_axis, name=packetType))
 
-layout = {'title': 'Title', 'xaxis': {'title':'Time'}, 'yaxis': {'title': 'Number of Packets'}}
+layout = {'title': sys.argv[2] + ' Packet Timeline', 'xaxis': {'title':'Time'}, 'yaxis': {'title': 'Number of Packets'}}
 plotly.offline.plot({'data':traces, 'layout':layout}, filename=sys.argv[1] + 
                     '/' + sys.argv[2] + '_timelinePackets.html')

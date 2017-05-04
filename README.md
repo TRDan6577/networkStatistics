@@ -55,6 +55,10 @@ amount of traffic sent and received, and types and amounts of traffic processed 
 (expressed in both bytes and number of packets). Currently, the types of traffic supported are
 ICMP, ICMPv6, ARP, TCP, and UDP.
 ![alt tag](https://raw.githubusercontent.com/TRDan6577/networkStatistics/master/exampleOutput/ipinfo.JPG)
+Additionally, this option also generates timelines for the traffic passed to and from that
+IP address in terms of packets and bytes.
+![alt tag](https://raw.githubusercontent.com/TRDan6577/networkStatistics/master/exampleOutput/byteTimeline.JPG)
+![alt tag](https://raw.githubusercontent.com/TRDan6577/networkStatistics/master/exampleOutput/packetTimeline.JPG)
 
 `3. General Information (For all IP addresses: types of traffic, how much traffic, etc)` : 
 This option shows the same as the previous option, but rather than showing the statistics
