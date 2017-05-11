@@ -1,5 +1,5 @@
 """
-Author: Tom Daniels
+Author: Tom Daniels, Kaitlin Keenan
 Purpose: Creates a force graph of IP addresses and any connections they made
 """
 

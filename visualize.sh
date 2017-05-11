@@ -1,5 +1,5 @@
 #!/bin/bash
-# Author: Tom Daniels <trd6577@g.rit.edu>
+# Author: Tom Daniels <trd6577@g.rit.edu>, Kaitlin Keenan
 # Purpose: This file is the main running file for the visualization software
 # TODO: Check to make sure the input file both exists and is a pcap
 
@@ -24,7 +24,7 @@ else
 fi
 echo 'done'
 
-fileDir="$(date)"
+fileDir="$1+$(date)"
 fileDir=${fileDir//" "/"."}
 
 # Make the directory to keep all of the files during this session
@@ -108,6 +108,10 @@ while [ $menuChoice -ne 0 ]; do
         # resources doing it again
         if [ ! -f "$fileDir/allIpInfo.html" ]; then
             python allIpInfo.py $fileDir > /dev/null 2>&1
+            # Wait here for 10 seconds. If you don't give time for the
+            # browser to open, it gives you an error
+            sleep 10s
+            python allIpTimeline.py $fileDir > /dev/null 2>&1
         else
             printf "Graph already generated. Open allIPInfo.html in "
             read -p "$fileDir to view it"
