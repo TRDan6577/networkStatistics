@@ -1,11 +1,11 @@
-# Stastical Network Analysis in Python (SNAP)
+# Statistical Network Analysis in Python (SNAP)
 
 ## What does it do?
 SNAP provides a statistical insight into your network through colorful graphs that make everyone
 from C-level executives to your very own grandma impressed with you. Capture traffic from
 your network using your favorite sniffer (make sure the file is in .pcap or .pcapng format)
 and feed it to SNAP. SNAP then presents you with a list of options for you to extract and
-export stastical goodies out of your .pcap. Choose as many options as you want!
+export statistical goodies out of your .pcap. Choose as many options as you want!
 
 ## Installation
 *Prerequisites* - You must have the following packages installed:
